@@ -10,6 +10,7 @@ from nodes import (
     format_response,
     route_request,
     tracking_node,
+    refund_node,
 )
 
 
@@ -21,6 +22,7 @@ def build_graph():
     builder.add_node("tracking", tracking_node)
     builder.add_node("details", details_node)
     builder.add_node("cancellation", cancellation_node)
+    builder.add_node("refund", refund_node)
     builder.add_node("format_response", format_response)
 
     builder.add_edge(START, "classify_intent")
@@ -32,12 +34,14 @@ def build_graph():
             "tracking": "tracking",
             "details": "details",
             "cancellation": "cancellation",
+            "refund": "refund",
             "format_response": "format_response",
         },
     )
     builder.add_edge("tracking", "format_response")
     builder.add_edge("details", "format_response")
     builder.add_edge("cancellation", "format_response")
+    builder.add_edge("refund", "format_response")
     builder.add_edge("format_response", END)
 
     return builder.compile()

@@ -5,6 +5,7 @@ ORDERS = {
         "item": "Wireless Headphones",
         "amount": 2999,
         "can_cancel": False,
+        "can_refund": False,
         "cancellation_reason": "The order has already been shipped and cannot be canceled.",
     },
     "ORD102": {
@@ -13,6 +14,7 @@ ORDERS = {
         "item": "Keyboard",
         "amount": 1499,
         "can_cancel": True,
+        # "can_refund": True,r
     },
     "ORD103": {
         "order_id": "ORD103",
@@ -20,6 +22,7 @@ ORDERS = {
         "item": "Mouse",
         "amount": 799,
         "can_cancel": False,
+        "can_refund": False,
         "cancellation_reason": "The order has already been delivered and cannot be canceled.",
     },
     "ORD104": {
@@ -28,5 +31,6 @@ ORDERS = {
         "item": "Monitor",        
         "amount": 5999,
         "can_cancel": True,
+        "can_refund": True,
     }
 }

@@ -10,6 +10,8 @@ def classify_intent(state):
         intent = "cancellation"
     elif "track" in query or "where" in query:
         intent = "tracking"
+    elif "refund" in query:
+            intent = "refund"
     elif re.search(r"\border\b|\bord\d+\b", query):
         intent = "details"
     else:
@@ -65,6 +67,26 @@ def cancellation_node(state):
     return {"response": response}
 
 
+def refund_node(state):
+    order, error = _find_order(state)
+    if error:
+        return error
+
+    can_refund = order.get("can_refund")
+    if can_refund is None:
+        response = (
+            f"Refund eligibility for order {state['order_id']} is not specified."
+        )
+        return {"response": response}
+    elif can_refund:
+        response = f"Order {state['order_id']} is eligible for a refund."
+    else:
+        response = (
+            f"Order {state['order_id']} cannot be refunded because "
+            f"its status is {order['status']}."
+        )
+    return {"response": response}
+
 def route_request(state):
     if state["intent"] == "unknown" or not state["order_id"]:
         return "format_response"
@@ -73,6 +95,7 @@ def route_request(state):
         "tracking": "tracking",
         "details": "details",
         "cancellation": "cancellation",
+        "refund": "refund",
     }
     return routes.get(state["intent"], "format_response")
 
